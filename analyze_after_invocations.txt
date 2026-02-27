@@ -1,0 +1,25 @@
+Analyzing exporthub_mobile...                                   
+
+   info • Statements in an if should be enclosed in a block • lib/features/assessment/presentation/screens/assessment_result_screen.dart:18:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/features/assessment/presentation/screens/assessment_result_screen.dart:20:7 • curly_braces_in_flow_control_structures
+   info • Don't invoke 'print' in production code • lib/features/auth/data/repositories/auth_repository.dart:20:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/auth/data/repositories/auth_repository.dart:27:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/auth/data/repositories/auth_repository.dart:39:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/auth/data/repositories/auth_repository.dart:48:7 • avoid_print
+warning • The '!' will have no effect because the receiver can't be null • lib/features/capacity_building/presentation/providers/capacity_building_provider.dart:187:30 • unnecessary_non_null_assertion
+   info • The declaration '_buildStat' isn't referenced • lib/features/capacity_building/presentation/screens/capacity_building_screen.dart:234:10 • unused_element
+   info • Don't invoke 'print' in production code • lib/features/events/data/repositories/events_repository.dart:28:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/events/presentation/providers/events_provider.dart:123:7 • avoid_print
+warning • Unused import: 'package:intl/intl.dart' • lib/features/events/presentation/screens/events_list_screen.dart:4:8 • unused_import
+warning • Unused import: 'package:cached_network_image/cached_network_image.dart' • lib/features/events/presentation/screens/events_list_screen.dart:5:8 • unused_import
+warning • Unused import: '../providers/favorites_provider.dart' • lib/features/events/presentation/screens/events_list_screen.dart:7:8 • unused_import
+warning • Unused import: '../../../../core/constants/api_constants.dart' • lib/features/events/presentation/screens/events_list_screen.dart:11:8 • unused_import
+   info • Unnecessary 'const' keyword • lib/features/events/presentation/screens/invitations_screen.dart:220:11 • unnecessary_const
+   info • Unnecessary 'const' keyword • lib/features/events/presentation/screens/invitations_screen.dart:229:11 • unnecessary_const
+   info • The private field _expandedSessions could be 'final' • lib/features/events/presentation/widgets/enhanced_schedule_view.dart:22:12 • prefer_final_fields
+warning • The value of the local variable 'pendingInvites' isn't used • lib/features/profile/presentation/screens/profile_screen.dart:21:11 • unused_local_variable
+  error • Undefined name 'pendingInvites' • lib/features/profile/presentation/screens/profile_screen.dart:327:19 • undefined_identifier
+  error • Undefined name 'pendingInvites' • lib/features/profile/presentation/screens/profile_screen.dart:342:25 • undefined_identifier
+warning • Unused import: '../../../../core/theme/app_theme.dart' • lib/features/staff/presentation/screens/qr_scanner_screen.dart:5:8 • unused_import
+warning • Unused import: '../../../../core/constants/api_constants.dart' • lib/features/ticket/presentation/screens/ticket_detail_screen.dart:7:8 • unused_import
+
