@@ -565,6 +565,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         _buildActionCard(
           context,
+          icon: Icons.calendar_today,
+          title: "Events",
+          color: AppTheme.primary,
+          onTap: () => context.push('/events'),
+        ),
+        _buildActionCard(
+          context,
+          icon: Icons.confirmation_number,
+          title: "View Ticket",
+          color: AppTheme.warning,
+          onTap: () => context.push('/ticket'),
+        ),
+        _buildActionCard(
+          context,
           icon: Icons.school,
           title: "Capacity Building",
           color: AppTheme.success,
@@ -585,24 +599,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         _buildActionCard(
           context,
-          icon: Icons.calendar_today,
-          title: "Events",
-          color: AppTheme.primary,
-          onTap: () => context.push('/events'),
-        ),
-        _buildActionCard(
-          context,
           icon: Icons.folder_open,
           title: "Resources",
           color: AppTheme.accent,
           onTap: () => context.push('/resources'),
-        ),
-        _buildActionCard(
-          context,
-          icon: Icons.confirmation_number,
-          title: "View Ticket",
-          color: AppTheme.warning,
-          onTap: () {}, // QR ticket view
         ),
       ],
     );
