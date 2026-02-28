@@ -26,6 +26,13 @@ import '../../features/resources/presentation/screens/resources_screen.dart';
 import '../../features/resources/presentation/screens/markdown_resource_screen.dart';
 import '../../features/resources/domain/models/resource.dart';
 import '../../features/events/presentation/screens/invitations_screen.dart';
+// EOI screens
+import '../../features/eoi/presentation/screens/eoi_form_screen.dart';
+import '../../features/eoi/presentation/screens/eoi_confirmation_screen.dart';
+import '../../features/eoi/presentation/screens/eoi_status_screen.dart';
+import '../../features/eoi/presentation/screens/eoi_complete_registration_screen.dart';
+// Summits public landing
+import '../../features/summits/presentation/screens/summits_landing_screen.dart';
 import 'widgets/main_wrapper.dart';
 
 // Named routes map for Navigator.pushNamed
@@ -77,6 +84,11 @@ final router = GoRouter(
       path: '/guest-welcome',
       builder: (context, state) => const GuestWelcomeScreen(),
     ),
+    // Public summits landing — no auth required
+    GoRoute(
+      path: '/summits-landing',
+      builder: (context, state) => const SummitsLandingScreen(),
+    ),
     GoRoute(
       path: '/capacity-building/:moduleId',
       builder: (context, state) {
@@ -100,6 +112,40 @@ final router = GoRouter(
           },
         ),
       ],
+    ),
+
+    // ─── EOI Routes ───────────────────────────────────────────────────────────
+    GoRoute(
+      path: '/eoi/form',
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>?;
+        return EoiFormScreen(
+          summitId: extras?['summitId'] as int? ?? 0,
+          summitTitle: extras?['summitTitle'] as String? ?? 'NESS 2026',
+        );
+      },
+    ),
+    GoRoute(
+      path: '/eoi/confirmation',
+      builder: (context, state) => const EoiConfirmationScreen(),
+    ),
+    GoRoute(
+      path: '/eoi/check-status',
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>?;
+        final summitId = extras?['summitId'] as int? ?? 1;
+        return EoiStatusScreen(summitId: summitId);
+      },
+    ),
+    GoRoute(
+      path: '/eoi/complete-registration',
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>?;
+        return EoiCompleteRegistrationScreen(
+          registrationToken: extras?['token'] as String? ?? '',
+          prefillName: extras?['name'] as String?,
+        );
+      },
     ),
     GoRoute(
       path: '/staff/scan',

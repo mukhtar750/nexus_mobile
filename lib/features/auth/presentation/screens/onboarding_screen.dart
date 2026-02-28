@@ -18,19 +18,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "title": "Welcome to NEXUS",
       "subtitle":
           "A sensitization and capacity building platform for global non-oil export opportunities.",
-      "image": "assets/images/onboarding1.png" // Placeholder
+      "image": "assets/images/onboarding1.png"
     },
     {
       "title": "Navigate Non-Oil Export Opportunities with ease",
       "subtitle":
           "Register for sensitizing non-oil export opportunities, networking events, and trade fairs directly from the app.",
-      "image": "assets/images/onboarding2.png" // Placeholder
+      "image": "assets/images/onboarding2.png"
     },
     {
       "title": "About NEXUS",
       "subtitle":
-          "NEXUS is Nigeria's premier digital platform dedicated to empowering non-oil exporters. In partnership with the Central Bank of Nigeria, we provide comprehensive support, training, and resources to help Nigerian businesses thrive in the global export market. Our mission is to diversify Nigeria's economy by equipping exporters with the tools, knowledge, and opportunities needed to succeed internationally.",
-      "image": "assets/images/onboarding3.png" // Placeholder
+          "NEXUS is Nigeria's premier digital platform dedicated to empowering non-oil exporters. In partnership with the Central Bank of Nigeria, we provide comprehensive support, training, and resources to help Nigerian businesses thrive in the global export market.",
+      "image": "assets/images/onboarding3.png"
     },
   ];
 
@@ -51,7 +51,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Show Logo for the first slide, otherwise use Icon placeholder
                         if (index == 0)
                           SizedBox(
                             width: 250,
@@ -138,7 +137,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  // Next/Get Started Button
+                  // Next / Get Started button
                   ElevatedButton(
                     onPressed: () {
                       if (_currentPage < _pages.length - 1) {
@@ -147,7 +146,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        context.go('/login');
+                        // Goes to the public Summits landing (no login needed)
+                        context.go('/summits-landing');
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -157,8 +157,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     child: Text(
                       _currentPage == _pages.length - 1
-                          ? "Get Started"
-                          : "Next",
+                          ? 'Get Started'
+                          : 'Next',
                     ),
                   ),
                 ],

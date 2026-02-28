@@ -367,7 +367,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return SizedBox(
-      height: 200,
+      height: 220,
       child: PageView.builder(
         controller: _pageController,
         onPageChanged: (index) {
@@ -380,82 +380,70 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           final summit = summits[index];
           final eventsState = ref.watch(eventsProvider);
 
-          return InkWell(
-            onTap: () {
-              if (summit.eventId == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Event registration opening soon!"),
-                    backgroundColor: AppTheme.primary,
-                  ),
-                );
-                return;
-              }
-
-              // Find the event in the events list
-              final event = eventsState.events.firstWhere(
-                (e) => e.id == summit.eventId,
-                orElse: () => Event(
-                  id: summit.eventId!,
-                  title: summit.title,
-                  description: "Details coming soon...",
-                  startTime: DateTime.now(),
-                  endTime: DateTime.now(),
-                  location: summit.venue,
-                ),
-              );
-
-              context.push('/events/detail', extra: event);
-            },
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                color: AppTheme.primary,
-                borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  colors: [AppTheme.primary, AppTheme.primary.withOpacity(0.8)],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              color: AppTheme.primary,
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                colors: [AppTheme.primary, AppTheme.primary.withOpacity(0.8)],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
               ),
-              child: Stack(
-                children: [
-                  // Placeholder Pattern/Image
-                  Positioned.fill(
-                    child: Opacity(
-                      opacity: 0.1,
-                      child: Image.asset(
-                        "assets/images/logo.png",
-                        repeat: ImageRepeat.repeat,
-                      ),
+            ),
+            child: Stack(
+              children: [
+                // Background pattern
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.1,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      repeat: ImageRepeat.repeat,
                     ),
                   ),
-                  // Content
-                  Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                summit.zone,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              ),
+                ),
+                // Content
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Top row: zone badge + register badge
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            if (summit.eventId != null)
-                              Container(
+                            child: Text(
+                              summit.zone,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12),
+                            ),
+                          ),
+                          if (summit.eventId != null)
+                            InkWell(
+                              onTap: () {
+                                final event = eventsState.events.firstWhere(
+                                  (e) => e.id == summit.eventId,
+                                  orElse: () => Event(
+                                    id: summit.eventId!,
+                                    title: summit.title,
+                                    description: 'Details coming soon...',
+                                    startTime: DateTime.now(),
+                                    endTime: DateTime.now(),
+                                    location: summit.venue,
+                                  ),
+                                );
+                                context.push('/events/detail', extra: event);
+                              },
+                              borderRadius: BorderRadius.circular(4),
+                              child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
@@ -468,7 +456,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         color: Colors.white, size: 12),
                                     SizedBox(width: 4),
                                     Text(
-                                      "REGISTER",
+                                      'REGISTER',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 10,
@@ -478,75 +466,152 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   ],
                                 ),
                               ),
-                          ],
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      // Title
+                      Text(
+                        summit.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          summit.title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+                      // Date
+                      Row(
+                        children: [
+                          const Icon(Icons.calendar_today,
+                              color: AppTheme.accent, size: 14),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              summit.date,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 13),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.calendar_today,
-                                color: AppTheme.accent, size: 16),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                summit.date,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                                overflow: TextOverflow.ellipsis,
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      // Venue
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on_outlined,
+                              color: Colors.white70, size: 14),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              summit.venue,
+                              style: const TextStyle(
+                                  color: Colors.white70, fontSize: 13),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const Spacer(),
+
+                      // ── Express Interest button row ──────────────────
+                      Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                context.go('/eoi/form', extra: {
+                                  'summitId': summit.id,
+                                  'summitTitle': summit.title,
+                                });
+                              },
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 9),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.volunteer_activism,
+                                      color: AppTheme.primary,
+                                      size: 15,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'Express Interest',
+                                      style: TextStyle(
+                                        color: AppTheme.primary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined,
-                                color: Colors.white70, size: 16),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                summit.venue,
-                                style: const TextStyle(
-                                    color: Colors.white70, fontSize: 14),
-                                overflow: TextOverflow.ellipsis,
+                          ),
+                          // Check status — a secondary tap target
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {
+                              context.go('/eoi/check-status',
+                                  extra: {'summitId': summit.id});
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 9, horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.18),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    color: Colors.white.withOpacity(0.4)),
+                              ),
+                              child: const Text(
+                                'My Status',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                    ],
                   ),
-                  // Indicators
-                  Positioned(
-                    bottom: 16,
-                    right: 16,
-                    child: Row(
-                      children: List.generate(
-                        summits.length,
-                        (dotIndex) => Container(
-                          margin: const EdgeInsets.only(left: 4),
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _currentPage == dotIndex
-                                ? AppTheme.accent
-                                : Colors.white.withOpacity(0.3),
-                          ),
+                ),
+                // Page indicators
+                Positioned(
+                  bottom: 46,
+                  right: 20,
+                  child: Row(
+                    children: List.generate(
+                      summits.length,
+                      (dotIndex) => Container(
+                        margin: const EdgeInsets.only(left: 4),
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentPage == dotIndex
+                              ? AppTheme.accent
+                              : Colors.white.withOpacity(0.3),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
