@@ -76,7 +76,13 @@ class _EoiCompleteRegistrationScreenState
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E)),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/summits-landing');
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(
